@@ -1,94 +1,65 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Phishing Detector</title>
 
-<title>AI Phishing Detector</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-body{
-    background:#111827;
-    color:white;
-    text-align:center;
-    font-family:Arial;
-    padding-top:50px;
-}
-
-input{
-    width:400px;
-    padding:12px;
-    border-radius:10px;
-    border:none;
-}
-
-button{
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#2563eb;
-    color:white;
-}
-
-.card{
-    width:600px;
-    background:#1f2937;
-    margin:auto;
-    padding:20px;
-    border-radius:20px;
-    margin-top:30px;
-}
-
-.risk{
-    font-size:25px;
-    color:#f87171;
-}
-
-</style>
-
+    <!-- CSS -->lesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
+    <link rel="sty
 
-<h1>AI-Based Phishing Detection System</h1>
+<div class="background-animation"></div>
 
-<form method="POST">
+<div class="container-box">
 
-<input type="text" name="url" placeholder="Enter URL" required>
+    <div class="logo-section">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h1>AI Phishing Detector</h1>
+        <p>Analyze suspicious URLs using AI-powered threat detection</p>
+    </div>
 
-<button type="submit">
-Scan URL
-</button>
+    <form action="/predict" method="POST">
 
-</form>
+        <div class="input-group">
+            <input type="text" name="url" placeholder="Enter suspicious URL here..." required>
+        </div>
 
-{% if result %}
+        <button type="submit" class="scan-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Scan URL
+        </button>
 
-<div class="card">
+    </form>
 
-<h2>{{ result }}</h2>
+    {% if prediction %}
 
-<p><b>URL:</b> {{ url }}</p>
+    <div class="result-card">
 
-<p class="risk">
-Risk Score: {{ risk_score }}/100
-</p>
+        <h2>Detection Result</h2>
 
-<h3>Detected Keywords</h3>
+        {% if prediction == 'Safe' %}
+            <p class="safe">SAFE WEBSITE</p>
+        {% else %}
+            <p class="danger">PHISHING WEBSITE DETECTED</p>
+        {% endif %}
 
-<ul>
+        <div class="risk-meter">
+            <div class="risk-fill"></div>
+        </div>
 
-{% for word in keywords %}
+    </div>
 
-<li>{{ word }}</li>
-
-{% endfor %}
-
-</ul>
+    {% endif %}
 
 </div>
-
-{% endif %}
 
 </body>
 </html>
